@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <title>Kira</title>
+    <meta charset="utf-8" http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8">
+
+    <link href="./node_modules/milligram/dist/milligram.min.css" type="text/css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/3bdddf6199.js"></script>
+  </head>
+
+  <body style="padding-left: 4rem; padding-right: 4rem;">
+    <h1>Kira</h1>
+    <h5>Find out where a track can be streamed.</h5>
+    <hr>
+
+    <form onsubmit="return false">
+      <fieldset>
+        <label for="ref">What's the Spotify <abbr title="spotify:track:xxxx">URI</abbr> or <abbr title="open.spotify.com/track/xxxx">URL?</label>
+        <input type="text" placeholder="Spotify URI or URL" id="identifier" required>
+        <input type="submit" onclick="query()" value="Search availability">
+      </fieldset>
+    </form>
+
+    <section id="auth-prompt" style="display: none,">
+      <h2>It looks like you aren't logged in.</h2>
+      <p>
+        <strong>You'll need to let Kira access Spotify by granting it access through your account.</strong> You can log in <a href="https://accounts.spotify.com/authorize?client_id=c87ccc0ea8804a7b8b38d81ab3521827&redirect_uri=https://kira.itspugle.com&response_type=token&show_dialog=true">here</a>.
+        <br>
+        Don't worry, Kira can't access any of your information and only uses the access to query Spotify's database.
+      </p>
+    </section>
+
+    <label for="markets" id="markets-label"></label>
+    <ul id="markets">
+    </ul>
+
+      <hr>
+      <label for="help">Need help?</label>
+      <ul id="help">
+        <li><i class="fab fa-twitter"></i> <a href="https://twitter.com/ItsPugle/" target="_blank">Twitter</a></li>
+        <li><i class="fab fa-slack"></i> <a href="https://spotifycommunity.slack.com/messages/D760S78ER" target="_blank">Spotify Community</a></li>
+        <li><i class="fas fa-envelope"></i> <a href="mailto:tim@itspugle.com" target="_blank">tim@itspugle.com</a></li>
+      </ul>
+    <script src="index.js"></script>
+  </body>
+</html>
