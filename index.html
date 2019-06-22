@@ -6,12 +6,17 @@
     <meta charset="utf-8" http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta charset="utf-8">
-
-    <link href="/node_modules/milligram/dist/milligram.min.css" type="text/css" rel="stylesheet">
+    
+    <!-- Reference to node module removed while I wait for GitHub Support to get back to me about it not serving-->
+    <!-- <link href="/node_modules/milligram/dist/milligram.min.css" type="text/css" rel="stylesheet"> -->
     <script src="https://kit.fontawesome.com/3bdddf6199.js"></script>
+
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" href="//cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
+    <link rel="stylesheet" href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
   </head>
 
-  <body style="padding-left: 4rem; padding-right: 4rem;">
+  <body style="padding: 4rem;">
     <h1>Kira</h1>
     <h5>Find out where a track can be streamed.</h5>
     <hr>
@@ -27,7 +32,7 @@
     <section id="auth-prompt" style="display: none,">
       <h2>It looks like you aren't logged in.</h2>
       <p>
-        <strong>You'll need to let Kira access Spotify by granting it access through your account.</strong> You can log in <a href="https://accounts.spotify.com/authorize?client_id=c87ccc0ea8804a7b8b38d81ab3521827&redirect_uri=https://kira.itspugle.com&response_type=token&show_dialog=true">here</a>.
+        <strong>You'll need to let Kira access Spotify by granting it access through your account.</strong> <span style="background-color: #fdfdaf; padding: 0.5rem;">You can log in <a href="https://accounts.spotify.com/authorize?client_id=c87ccc0ea8804a7b8b38d81ab3521827&redirect_uri=https://kira.itspugle.com&response_type=token&show_dialog=true">here</a>.</span>
         <br>
         Don't worry, Kira can't access any of your information and only uses the access to query Spotify's database.
       </p>
