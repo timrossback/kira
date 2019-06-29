@@ -94,6 +94,7 @@ const countries = {
   TW: "Taiwan",
   TH: "Thailand",
   VN: "Vietnam",
+  IN: "India",
   // Europe
   AD: "Andorra",
   AT: "Austria",
