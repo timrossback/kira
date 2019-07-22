@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Playfair+Display:700|Inconsolata&display=swap');
+
+:root {
+  font-size: 16px;
+  font-family: "Montserrat", "Arial", sans-serif;
+  line-height: 1.5;
+}
+
+body {
+  margin: 2rem 3rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Playfair Display", sans-serif;
+}
+
+a:link, a:visited {
+  color: #7ca1ff;
+  text-decoration: none;
+}
+
+a:hover, a:active {
+  color: #4d639c;
+  text-decoration: none;
+}
+
+::selection {
+  color: black;
+  background: #ffd2c4;
+}
+
+::-moz-selection {
+  color: black;
+  background:  #ffd2c4;
+}
+
+.alert {
+  padding: 1rem;
+  border-width: 0 0 0 0.15rem;
+  border-color: black;
+  border-style: solid;
+  background-color: #fff6e6;
+}
+
+code {
+  font-family: "Inconsolata", monospace;
+  padding: 3px;
+  background-color: #fff6e6;
+}
+
+form {
+  padding: 1rem;
+}
+
+input {
+  border-radius: 5px;
+  border-color: black;
+  border-width: 1px;
+  min-width: 10rem;
+  height: 2rem;
+  padding-left: 1rem;
+}
+
+button {
+  border-radius: 5px;
+  border-color: black;
+  border-width: 1px;
+  min-width: 2rem;
+  height: 2rem;
+  background-color: #FFF6E6;
+}
+
+ul > li {
+  list-style-type: disc;
+}
+
+dt {
+  font-weight: bold;
+  font-family: "Inter Semi Bold", sans-serif;
+}
