@@ -1,13 +1,15 @@
 // If the user isn't logged in on first load, they're prompted to.
-(function() {
+(function () {
   if (window.location.href.includes("#access_token") != true) {
     console.log("No #access_token found; showing prompt to login via Spotify Auth API.");
-    document.getElementsByTagName("form")[0].style.display = "none";
-    document.getElementById("auth-prompt").style.display = "";
+    document.getElementById("error-panel").style.display = "";
   } else {
     console.log("$access_token found")
-    document.getElementsByTagName("form")[0].style.display = "";
-    document.getElementById("auth-prompt").style.display = "none";
+    document.getElementById("error-panel").innerHTML =
+      `<h2 id="error-title"></h2> <p id="error-body"></p>`;
+    document.getElementById("error-panel").style.display = "none";
+    document.getElementById("form").style.display = "";
+    document.getElementById("results").style.display = "";
   }
 })();
 
@@ -19,13 +21,13 @@ function getTrackId() {
     trackValue = trackInput.slice(14, 36);
   } else if (trackInput.includes("https://open.spotify.com/track/")) {
     trackValue = trackInput.slice(31, 53);
-  } else (
+  } else(
     console.error("Neither \"spotify:track:\" or \"https://open.spotify.com/track/\" were found in the input:" + trackInput)
   )
   return trackValue;
 }
 
-function query(){
+function query() {
   // Sets the user access token as returned by Spotify Web API
   const urlHash = window.location.hash.substring(1).split("&").reduce(function (initial, item) {
     if (item) {
@@ -39,23 +41,29 @@ function query(){
 
   var request = new XMLHttpRequest();
   request.open('GET', "https://api.spotify.com/v1/tracks/" + getTrackId(), true);
-  request.setRequestHeader("Authorization", "Bearer " + accessToken)
+  request.setRequestHeader("Authorization", "Bearer " + accessToken);
+  request.responseType = "json";
 
-  request.onload = function() {
+  request.send();
+
+  request.onload = function () {
     if (this.status >= 200 && this.status < 400) {
       console.log(this.response);
-      var resp = JSON.parse(this.response);
+      var resp = this.response;
       var track = resp.name;
       var artist = resp.artists[0].name;
       var markets = resp.available_markets;
 
       if (markets.toString() === "") {
-        console.error("There was an error: track is relinked.")
-        document.getElementById("markets-label").innerHTML = "<h3>It looks like something has gone wrong.</h3><br>Kira isn't able to tell where this track can be streamed right now."
+        console.error("There was an error: track is relinked.");
+        document.getElementById("error-title").innerText = "Kira isn't able to process this track right now.";
+        document.getElementById("error-body").innerText = "The way that Spotify stores this track metadata means that Kira isn't able to get the countries where this track is available just yet. I'm working on finding a way, but for now, you may need to use another tool instead";
+        document.getElementById("error-panel").style.display = "";
         document.getElementById("markets").style.display = "none";
       } else {
         document.getElementById("markets-label").innerHTML = "<strong>" + track + "</strong> by <strong>" + artist + "</strong> can be streamed in " + markets.length + " countries:";
         document.getElementById("markets").style.display = "";
+        document.getElementById("error-panel").style.display = "none";
         document.getElementById("markets").innerHTML = "";
         for (var i = 0; i < markets.length; i++) {
           let country = countries[markets[i]];
@@ -65,19 +73,20 @@ function query(){
         }
       }
     } else {
-      console.error("There was an error: connection made, but returned an error status code.");
-      document.getElementById("markets-label").innerHTML = "<h3>It looks like something has gone wrong.</h3><br>Something has happened when talking to Spotify. Try again a little bit later?"
+      console.error("There was an error: connection made, but returned an error status code: " + this.status + ".");
+      document.getElementById("error-title").innerText = "Kira is having a few issues right now.";
+      document.getElementById("error-body").innerText = "Something has happened when talking to Spotify and an error was thrown (" + this.status + "). Try again a little bit later?";
+      document.getElementById("error-panel").style.display = "";
       document.getElementById("markets").style.display = "none";
     }
   };
 
-  request.onerror = function() {
+  request.onerror = function () {
     console.error("There was an error: a connection could not be made to the Spotify Web API. It may be unavailable right now.");
-    document.getElementById("markets-label").innerHTML = "<h3>It looks like something has gone wrong.</h3>Kira wasn't able to get in touch with Spotify. Try again a little bit later?"
+    document.getElementById("error-title").innerText = "Kira can't reach Spotify right now.";
+    document.getElementById("error-body").innerText = "Something's happened and Kira isn't able to reach Spotify's servers right now. Try again a little bit later?";
     document.getElementById("markets").style.display = "none";
   };
-
-  request.send();
 }
 
 const countries = {

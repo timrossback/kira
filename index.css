@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat|Playfair+Display:700|Inconsolata&display=swap');
 
+/* Typography */
+
 :root {
   font-size: 16px;
   font-family: "Montserrat", "Arial", sans-serif;
@@ -14,6 +16,8 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Playfair Display", "Times New Roman", serif;
 }
 
+/* Links */
+
 a:link, a:visited {
   color: #7ca1ff;
   text-decoration: none;
@@ -24,6 +28,8 @@ a:hover, a:active {
   text-decoration: none;
 }
 
+/* Selection */
+
 ::selection {
   color: black;
   background: #ffd2c4;
@@ -33,6 +39,8 @@ a:hover, a:active {
   color: black;
   background:  #ffd2c4;
 }
+
+/* Purpose elements */
 
 .alert {
   padding: 1rem;
@@ -48,27 +56,51 @@ code {
   background-color: #fff6e6;
 }
 
+/* Forms and buttons */
+
 form {
-  padding: 1rem;
+  padding: 1rem 0;
+}
+
+label {
+  display: block;
+  margin-bottom: 1rem;
 }
 
 input {
-  border-radius: 5px;
+  border-radius: 3px;
   border-color: black;
   border-width: 1px;
-  min-width: 10rem;
   height: 2rem;
+  padding: 0;
+  outline: 0;
+}
+
+input[type="text"] {
   padding-left: 1rem;
 }
 
-button {
+
+button, input[type="submit"] {
   border-radius: 5px;
   border-color: black;
   border-width: 1px;
-  min-width: 2rem;
   height: 2rem;
+  padding: 0 1rem;
   background-color: #FFF6E6;
+  outline: 0;
 }
+
+button:active, input[type="submit"]:active {
+  border-radius: 5px;
+  border-color: black;
+  border-width: 1px;
+  height: 2rem;
+  padding: 0 1rem;
+  background-color: #ffd2c4;
+}
+
+/* Lists */
 
 ul > li {
   list-style-type: disc;
