@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat|Playfair+Display:700|Inconsolata&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Red+Hat+Display:900|Red+Hat+Text&display=swap');
 
 /* Typography */
 
 :root {
   font-size: 16px;
-  font-family: "Montserrat", "Arial", sans-serif;
+  font-family: "Red Hat Text", sans-serif;
   line-height: 1.5;
 }
 
@@ -13,7 +13,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Playfair Display", "Times New Roman", serif;
+  font-family: "Red Hat Display", sans-serif;
 }
 
 /* Links */
