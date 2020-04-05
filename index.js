@@ -4,12 +4,14 @@
     console.log("No #access_token found; showing prompt to login via Spotify Auth API.");
     document.getElementById("error-panel").style.display = "";
   } else {
-    console.log("$access_token found")
+    console.log("#access_token found")
     document.getElementById("error-panel").innerHTML =
       `<h2 id="error-title"></h2> <p id="error-body"></p>`;
     document.getElementById("error-panel").style.display = "none";
     document.getElementById("form").style.display = "";
     document.getElementById("results").style.display = "";
+    // COVID-19: wishing well
+    console.log("I hope that you're well!")
   }
 })();
 
