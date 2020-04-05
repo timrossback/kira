@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css?family=Livvic&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cabin:wght@400;500&family=Inconsolata&display=swap');
 
 /* Typography */
 
 :root {
   font-size: 16px;
-  font-family: Livvic, sans-serif;
+  font-family: "Cabin", sans-serif;
   line-height: 1.5;
 }
 
@@ -104,5 +104,5 @@ ul > li {
 }
 
 dt {
-  font-weight: bold;
+  font-weight: 500;
 }
