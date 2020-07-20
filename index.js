@@ -10,8 +10,6 @@
     document.getElementById("error-panel").style.display = "none";
     document.getElementById("form").style.display = "";
     document.getElementById("results").style.display = "";
-    // COVID-19: wishing well
-    console.log("I hope that you're well!")
   }
 })();
 
@@ -107,10 +105,14 @@ const countries = {
   VN: "Vietnam",
   IN: "India",
   // Europe
+  AL: "Albania",
   AD: "Andorra",
   AT: "Austria",
+  BY: "Belarus",
   BE: "Belgium",
+  BA: "Bosnia and Herzegovina",
   BG: "Bulgaria",
+  CR: "Croatia",
   CY: "Cyprus",
   CZ: "Czech Republic",
   DK: "Denmark",
@@ -123,22 +125,31 @@ const countries = {
   IS: "Iceland",
   IE: "Ireland",
   IT: "Italy",
+  KZ: "Kazakhstan",
+  XK: "Kosovo",
   LV: "Latvia",
   LI: "Liechtenstien",
   LT: "Lithuania",
   LU: "Luxembourg",
   MT: "Malta",
+  MD: "Moldova",
   MC: "Monaco",
+  ME: "Montenegro",
   NL: "Netherlands",
   NO: "Norway",
+  MK: "North Macedonia",
   PL: "Poland",
   PT: "Portugal",
   RO: "Romania",
+  RU: "Russia",
+  RS: "Serbia",
   SK: "Slovakia",
+  SI: "Slovenia",
   ES: "Spain",
   SE: "Sweden",
   CH: "Switzerland",
   TR: "Turkey",
+  UA: "Ukraine",
   GB: "United Kingdom",
   // Latin America and the Caribbean
   AR: "Argentina",
