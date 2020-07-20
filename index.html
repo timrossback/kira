@@ -4,31 +4,31 @@
   <head>
     <title>Kira | ItsPugle</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    <script src="https://kit.fontawesome.com/3bdddf6199.js"></script>
-    <link rel="stylesheet" href="index.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/light.min.css">
   </head>
 
   <body>
     <h1>Kira</h1>
-    <p>&#127759; Find the countries where a track can be streamed from</p>
+    <h4>&#127759; Find the countries where a track can be streamed from</h4>
 
     <hr>
 
     <form onsubmit="return false" id="form" style="display: none;">
       <label for="indentifier">What's the Spotify <abbr title="spotify:track:xxxx">URI</abbr> or <abbr title="open.spotify.com/track/xxxx">URL?</label>
-      <input type="text" placeholder="Spotify URI or URL" id="identifier"  required>
+      <textarea type="text" placeholder="Spotify URI or URL" id="identifier" required></textarea>
       <input type="submit" onclick="query()" value="Search availability">
+      <br>
     </form>
 
-    <section id="error-panel" class="alert">
-      <h2 id="error-title">It looks like you aren't logged in.</h2>
-      <p id="error-body">
+    <blockquote id="error-panel" class="alert">
+      <h2>It looks like you aren't logged in.</h2>
+      <p>
         <strong>You'll need to let Kira access Spotify by granting it access through your account.</strong> You can log in <a href="https://accounts.spotify.com/authorize?client_id=cda2c3646652460fa7160485639bd2dd&redirect_uri=https://kira.itspugle.com&response_type=token&show_dialog=true">here</a>.
         <br>
         Don't worry, Kira doesn't access any of your information and only uses the access to query Spotify's database.
       </p>
-    </section>
+    </blockquote>
 
     <section id="results" style="display: none;">
       <label for="markets" id="markets-label"></label>
