@@ -112,7 +112,7 @@ const countries = {
   BE: "Belgium",
   BA: "Bosnia and Herzegovina",
   BG: "Bulgaria",
-  CR: "Croatia",
+  HR: "Croatia",
   CY: "Cyprus",
   CZ: "Czech Republic",
   DK: "Denmark",
