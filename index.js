@@ -2,12 +2,12 @@
 (function () {
   if (window.location.href.includes("#access_token") != true) {
     console.log("No #access_token found; showing prompt to login via Spotify Auth API.");
-    document.getElementById("error-panel").style.display = "";
+    document.getElementById("signIn").style.display = "";
   } else {
     console.log("#access_token found")
-    document.getElementById("error-panel").innerHTML =
+    document.getElementById("signIn").innerHTML =
       `<h2 id="error-title"></h2> <p id="error-body"></p>`;
-    document.getElementById("error-panel").style.display = "none";
+    document.getElementById("signIn").style.display = "none";
     document.getElementById("form").style.display = "";
     document.getElementById("results").style.display = "";
   }
@@ -58,12 +58,12 @@ function query() {
         console.error("There was an error: track is relinked.");
         document.getElementById("error-title").innerText = "Kira isn't able to process this track right now.";
         document.getElementById("error-body").innerText = "The way that Spotify stores this track metadata means that Kira isn't able to get the countries where this track is available just yet. I'm working on finding a way, but for now, you may need to use another tool instead";
-        document.getElementById("error-panel").style.display = "";
+        document.getElementById("signIn").style.display = "";
         document.getElementById("markets").style.display = "none";
       } else {
         document.getElementById("markets-label").innerHTML = "<strong>" + track + "</strong> by <strong>" + artist + "</strong> can be streamed in " + markets.length + " countries:";
         document.getElementById("markets").style.display = "";
-        document.getElementById("error-panel").style.display = "none";
+        document.getElementById("signIn").style.display = "none";
         document.getElementById("markets").innerHTML = "";
         for (var i = 0; i < markets.length; i++) {
           let country = countries[markets[i]];
@@ -76,7 +76,7 @@ function query() {
       console.error("There was an error: connection made, but returned an error status code: " + this.status + ".");
       document.getElementById("error-title").innerText = "Kira is having a few issues right now.";
       document.getElementById("error-body").innerText = "Something has happened when talking to Spotify and an error was thrown (" + this.status + "). Try again a little bit later?";
-      document.getElementById("error-panel").style.display = "";
+      document.getElementById("signIn").style.display = "";
       document.getElementById("markets").style.display = "none";
     }
   };
