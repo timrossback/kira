@@ -1,7 +1,4 @@
-![Kira header](https://i.ibb.co/MVRGj6Z/image.png)
-
-<hr>
-
+# Kira
 **Just head over to [kira.itspugle.com](https://kira.itspugle.com) and follow the prompts to use Kira.**
 
 ## Your privacy
