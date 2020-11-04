@@ -54,12 +54,26 @@ function query() {
       var artist = resp.artists[0].name;
       var markets = resp.available_markets;
 
-      if (markets.toString() === "") {
+      if (markets.length == 0) {
+        var markets = resp.album.available_markets;
+        if (markets.length == 0) {
         console.error("There was an error: track is relinked.");
         document.getElementById("error-title").innerText = "Kira isn't able to process this track right now.";
         document.getElementById("error-body").innerText = "The way that Spotify stores this track metadata means that Kira isn't able to get the countries where this track is available just yet. I'm working on finding a way, but for now, you may need to use another tool instead";
         document.getElementById("signIn").style.display = "";
         document.getElementById("markets").style.display = "none";
+        } else {
+          document.getElementById("markets-label").innerHTML = "<strong>" + track + "</strong> by <strong>" + artist + "</strong> can be streamed in " + markets.length + " countries:";
+          document.getElementById("markets").style.display = "";
+          document.getElementById("signIn").style.display = "none";
+          document.getElementById("markets").innerHTML = "";
+          for (var i = 0; i < markets.length; i++) {
+            let country = countries[markets[i]];
+            const item = document.createElement("li");
+            item.innerHTML = country;
+            document.getElementById("markets").appendChild(item);
+          }
+        }
       } else {
         document.getElementById("markets-label").innerHTML = "<strong>" + track + "</strong> by <strong>" + artist + "</strong> can be streamed in " + markets.length + " countries:";
         document.getElementById("markets").style.display = "";
