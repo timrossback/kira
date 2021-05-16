@@ -90,7 +90,8 @@ function query() {
       console.log(this.response);
       var resp = this.response;
       var name = encodeText(resp.name);
-      var artist = encodeText(resp.artists[0].name);
+      var artists = encodeText(resp.artists.map(x => x.name).slice(0,2).join(", "));
+      var artistsEtc = resp.artists.length > 2;
       var markets = resp.available_markets;
 
       if (markets.length == 0) {
@@ -101,7 +102,7 @@ function query() {
         document.getElementById("markets").style.display = "none";
       } else {
         document.getElementById("markets-label").innerHTML = 
-          `<strong>${name}</strong> by <strong>${artist}</strong> can be streamed in ${markets.length} countries:`;
+          `<strong>${name}</strong> by <strong>${artists}${artistsEtc ? " etc." : ""}</strong> can be streamed in ${markets.length} countries:`;
         document.getElementById("markets").style.display = "";
         document.getElementById("signIn").style.display = "none";
         document.getElementById("markets").innerHTML = "";
