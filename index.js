@@ -55,7 +55,7 @@ function encodeText(text) {
   return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
-function query() {
+async function query() {
   // Sets the user access token as returned by Spotify Web API
   const urlHash = window.location.hash.substring(1).split("&").reduce(function (initial, item) {
     if (item) {
@@ -78,56 +78,58 @@ function query() {
     return;
   }
 
-  var request = new XMLHttpRequest();
-  request.open("GET", "https://api.spotify.com/v1/tracks/" + getTrackId(), true);
-  request.setRequestHeader("Authorization", "Bearer " + accessToken);
-  request.responseType = "json";
+  let error = false;
 
-  request.send();
-
-  request.onload = function () {
-    if (this.status >= 200 && this.status < 400) {
-      console.log(this.response);
-      var resp = this.response;
-      var name = encodeText(resp.name);
-      var artists = encodeText(resp.artists.map(x => x.name).slice(0,2).join(", "));
-      var artistsEtc = resp.artists.length > 2;
-      var markets = resp.available_markets;
-
-      if (markets.length == 0) {
-        console.error("There was an error: track is relinked.");
-        document.getElementById("error-title").innerText = "Kira isn't able to process this track right now.";
-        document.getElementById("error-body").innerText = "The way that Spotify stores this track metadata means that Kira isn't able to get the countries where this track is available just yet. I'm working on finding a way, but for now, you may need to use another tool instead";
-        document.getElementById("signIn").style.display = "";
-        document.getElementById("markets").style.display = "none";
-      } else {
-        document.getElementById("markets-label").innerHTML = 
-          `<strong>${name}</strong> by <strong>${artists}${artistsEtc ? " etc." : ""}</strong> can be streamed in ${markets.length} countries:`;
-        document.getElementById("markets").style.display = "";
-        document.getElementById("signIn").style.display = "none";
-        document.getElementById("markets").innerHTML = "";
-        for (var i = 0; i < markets.length; i++) {
-          let country = countries[markets[i]];
-          const item = document.createElement("li");
-          item.innerHTML = country;
-          document.getElementById("markets").appendChild(item);
-        }
-      }
-    } else {
+  const resp = await fetch(`https://api.spotify.com/v1/${trackOrAlbumId[1]}s/${trackOrAlbumId[0]}`, {
+    headers: {
+      "Authorization": `Bearer ${accessToken}`
+    }
+  }).catch((err) => {
+    console.error("There was an error: a connection could not be made to the Spotify Web API. It may be unavailable right now.");
+    document.getElementById("error-title").innerText = "Kira can't reach Spotify right now.";
+    document.getElementById("error-body").innerText = "Something's happened and Kira isn't able to reach Spotify's servers right now. Try again a little bit later?";
+    document.getElementById("signIn").style.display = "";
+    document.getElementById("markets").style.display = "none";
+    error = true;
+  }).then(x => {
+    if (x === undefined) return;
+    if (x.status >= 400) {
       console.error("There was an error: connection made, but returned an error status code: " + this.status + ".");
       document.getElementById("error-title").innerText = "Kira is having a few issues right now.";
       document.getElementById("error-body").innerText = "Something has happened when talking to Spotify and an error was thrown (" + this.status + "). Try again a little bit later?";
       document.getElementById("signIn").style.display = "";
       document.getElementById("markets").style.display = "none";
+      error = true;
+      return null;
     }
-  };
+    return x.json();
+  });
 
-  request.onerror = function () {
-    console.error("There was an error: a connection could not be made to the Spotify Web API. It may be unavailable right now.");
-    document.getElementById("error-title").innerText = "Kira can't reach Spotify right now.";
-    document.getElementById("error-body").innerText = "Something's happened and Kira isn't able to reach Spotify's servers right now. Try again a little bit later?";
+  if (error) return;
+
+  var name = encodeText(resp.name);
+  var artists = encodeText(resp.artists.map(x => x.name).slice(0,2).join(", "));
+  var artistsEtc = resp.artists.length > 2;
+  var markets = resp.available_markets;
+  if (markets.length == 0) {
+    console.error("There was an error: track is relinked.");
+    document.getElementById("error-title").innerText = "Kira isn't able to process this track right now.";
+    document.getElementById("error-body").innerText = "The way that Spotify stores this track metadata means that Kira isn't able to get the countries where this track is available just yet. I'm working on finding a way, but for now, you may need to use another tool instead";
+    document.getElementById("signIn").style.display = "";
     document.getElementById("markets").style.display = "none";
-  };
+  } else {
+    document.getElementById("markets-label").innerHTML = 
+      `<strong>${name}</strong> by <strong>${artists}${artistsEtc ? " etc." : ""}</strong> can be streamed in ${markets.length} countries:`;
+    document.getElementById("markets").style.display = "";
+    document.getElementById("signIn").style.display = "none";
+    document.getElementById("markets").innerHTML = "";
+    for (var i = 0; i < markets.length; i++) {
+      let country = countries[markets[i]];
+      const item = document.createElement("li");
+      item.innerHTML = country;
+      document.getElementById("markets").appendChild(item);
+    }
+  }   
 }
 
 // Thanks to @maephisto for this reference: https://gist.github.com/maephisto/9228207
