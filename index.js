@@ -107,10 +107,10 @@ async function query() {
 
   if (error) return;
 
-  var name = encodeText(resp.name);
-  var artists = encodeText(resp.artists.map(x => x.name).slice(0,2).join(", "));
-  var artistsEtc = resp.artists.length > 2;
-  var markets = resp.available_markets;
+  const name = encodeText(resp.name);
+  const artists = encodeText(resp.artists.map(x => x.name).slice(0,2).join(", "));
+  const artistsEtc = resp.artists.length > 2;
+  const markets = resp.available_markets;
   if (markets.length == 0) {
     console.error("There was an error: track is relinked.");
     document.getElementById("error-title").innerText = "Kira isn't able to process this track right now.";
