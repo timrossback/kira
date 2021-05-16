@@ -123,12 +123,11 @@ async function query() {
     document.getElementById("markets").style.display = "";
     document.getElementById("signIn").style.display = "none";
     document.getElementById("markets").innerHTML = "";
-    for (var i = 0; i < markets.length; i++) {
-      let country = countries[markets[i]];
+    markets.map(x => countries[x]).sort().map(country => {
       const item = document.createElement("li");
       item.innerHTML = country;
       document.getElementById("markets").appendChild(item);
-    }
+    })
   }   
 }
 
