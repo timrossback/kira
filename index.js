@@ -51,6 +51,10 @@ function getTrackOrAlbumId() {
   return [null, `Neither "spotify:track:", "spotify:album:", "https://open.spotify.com/track/", or "https://open.spotify.com/album/" were found in the input: ${input}`];
 }
 
+function encodeText(text) {
+  return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
 function query() {
   // Sets the user access token as returned by Spotify Web API
   const urlHash = window.location.hash.substring(1).split("&").reduce(function (initial, item) {
@@ -85,32 +89,19 @@ function query() {
     if (this.status >= 200 && this.status < 400) {
       console.log(this.response);
       var resp = this.response;
-      var track = resp.name;
-      var artist = resp.artists[0].name;
+      var name = encodeText(resp.name);
+      var artist = encodeText(resp.artists[0].name);
       var markets = resp.available_markets;
 
       if (markets.length == 0) {
-        var markets = resp.album.available_markets;
-        if (markets.length == 0) {
         console.error("There was an error: track is relinked.");
         document.getElementById("error-title").innerText = "Kira isn't able to process this track right now.";
         document.getElementById("error-body").innerText = "The way that Spotify stores this track metadata means that Kira isn't able to get the countries where this track is available just yet. I'm working on finding a way, but for now, you may need to use another tool instead";
         document.getElementById("signIn").style.display = "";
         document.getElementById("markets").style.display = "none";
-        } else {
-          document.getElementById("markets-label").innerHTML = "<strong>" + track + "</strong> by <strong>" + artist + "</strong> can be streamed in " + markets.length + " countries:";
-          document.getElementById("markets").style.display = "";
-          document.getElementById("signIn").style.display = "none";
-          document.getElementById("markets").innerHTML = "";
-          for (var i = 0; i < markets.length; i++) {
-            let country = countries[markets[i]];
-            const item = document.createElement("li");
-            item.innerHTML = country;
-            document.getElementById("markets").appendChild(item);
-          }
-        }
       } else {
-        document.getElementById("markets-label").innerHTML = "<strong>" + track + "</strong> by <strong>" + artist + "</strong> can be streamed in " + markets.length + " countries:";
+        document.getElementById("markets-label").innerHTML = 
+          `<strong>${name}</strong> by <strong>${artist}</strong> can be streamed in ${markets.length} countries:`;
         document.getElementById("markets").style.display = "";
         document.getElementById("signIn").style.display = "none";
         document.getElementById("markets").innerHTML = "";
