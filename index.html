@@ -12,7 +12,7 @@
 
   <body>
     <h1>Kira</h1>
-    <p><strong>&#127759; Find the countries where a track can be streamed from</strong></p>
+    <p><strong>&#127759; Find the countries where a track/album can be streamed from</strong></p>
 
     <hr>
 
@@ -32,7 +32,7 @@
     <!-- Spotify reference input form -->
     <form onsubmit="return false" id="form" style="display: none;">
       <br>
-      <label for="indentifier">What is the Spotify <abbr title="spotify:track:xxxx">URI</abbr> or <abbr title="open.spotify.com/track/xxxx">URL?</label>
+      <label for="indentifier">What is the Spotify <abbr title="spotify:track:xxxx">track URI</abbr>, <abbr title="spotify:album:xxxx">album URI</abbr>, <abbr title="open.spotify.com/track/xxxx">track URL</abbr>, or <abbr title="open.spotify.com/album/xxxx">album URL</abbr>?</label>
       <textarea type="text" placeholder="Spotify URI or URL" id="identifier" style="height: 1.1em; overflow: hidden;" required></textarea>
       <input type="submit" onclick="query()" value="Search">
       <br>

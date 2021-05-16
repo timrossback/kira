@@ -13,18 +13,42 @@
   }
 })();
 
-// Derives the track ID from the URI
-function getTrackId() {
-  var trackInput = document.getElementById("identifier").value;
-  var trackValue = "";
-  if (trackInput.includes("spotify:track:")) {
-    trackValue = trackInput.slice(14, 36);
-  } else if (trackInput.includes("https://open.spotify.com/track/")) {
-    trackValue = trackInput.slice(31, 53);
-  } else(
-    console.error("Neither \"spotify:track:\" or \"https://open.spotify.com/track/\" were found in the input:" + trackInput)
-  )
-  return trackValue;
+// Derives the track/album ID from the URI
+function getTrackOrAlbumId() {
+  let input = document.getElementById("identifier").value.trim();
+  if (input.startsWith("open.spotify.com")) {
+    input = "https://" + input;
+  }
+  let url;
+  try {
+    url = new URL(input);
+  } catch (_) {
+    return [null, `Failed to recognize a URI/URL: ${input}`];
+  }
+  url.search = "";
+  const path = url.pathname;
+  if (url.protocol === "spotify:") {
+    // Spotify internal URI
+    if (path.startsWith("album:")) {
+      return [path.replace(/^album:/, ""), "album"];
+    }
+    if (path.startsWith("track:")) {
+      return [path.replace(/^track:/, ""), "track"];
+    }
+    return [null, "Spotify URI is found, but it's not a album or track."];
+  }
+  if (url.protocol === "https:" || url.protocol === "http:") {
+    // Spotify URL
+    if (path.startsWith("/album/")) {
+      return [path.replace(/^\/album\//,""), "album"];
+    }
+    if (path.startsWith("/track/")) {
+      return [path.replace(/^\/track\//,""), "track"];
+    }
+    return [null, "Spotify URL is found, but it's not a album or track URL."];
+  }
+  console.error(msg);
+  return [null, `Neither "spotify:track:", "spotify:album:", "https://open.spotify.com/track/", or "https://open.spotify.com/album/" were found in the input: ${input}`];
 }
 
 function query() {
@@ -38,6 +62,17 @@ function query() {
   }, {});
 
   const accessToken = urlHash.access_token;
+
+  const trackOrAlbumId = getTrackOrAlbumId();
+
+  if (trackOrAlbumId[0] === null) {
+    console.error(trackOrAlbumId[1]);
+    document.getElementById("error-title").innerText = "Kira can't recognize your input.";
+    document.getElementById("error-body").innerText = trackOrAlbumId[1];
+    document.getElementById("signIn").style.display = "";
+    document.getElementById("markets").style.display = "none";
+    return;
+  }
 
   var request = new XMLHttpRequest();
   request.open("GET", "https://api.spotify.com/v1/tracks/" + getTrackId(), true);
