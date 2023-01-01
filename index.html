@@ -3,58 +3,92 @@
 <html lang="en">
   <head>
     <title>Kira</title>
-    <!-- Responsive viewport tag -->
+
+    <!-- Required tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Water.CSS stylsheets from JSDelivr -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <link rel="stylesheet" href="https://unpkg.com/chota@latest">
 
-    <!-- Manual font override -->
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+      :root {
+        --color-primary: rgb(198, 103, 192);
+        --color-error: rgb(218, 72, 72);
+      }
 
-      body {
-        font-family: "Atkinson Hyperlegible", sans-serif !important;
+      .smooth-corner {
+        border-radius: 0.5rem;
+      }
+
+      .has-padding {
+        padding: 1rem;
+      }
+
+      nav.nav {
+        margin-top: 1rem;
+      }
+
+      hr {
+        padding-top: 0;
       }
     </style>
+
+    <script>
+      if (window.matchMedia &&
+          window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+      }
+    </script>
   </head>
 
   <body>
-    <h1>Kira</h1>
-    <p><strong>&#127759; Find the countries where a track/album can be streamed from</strong></p>
+    <main class="container">
+      <header>
+        <nav class="nav">
+          <div class="nav-left">
+            <strong><a href="https://kira.vercel.app" class="brand text-white bg-primary">Kira</a></strong>
+          </div>
+          <div class="nav-right">
+            <a href="https://github.com/timrossback/Kira" target="_blank">View on GitHub</a>
+          </div>
+        </nav>
+      
+        <h1 class="is-marginless">Welcome to <strong>Kira</strong></h1>
+        <p class="is-paddingless">Kira talks to Spotify to find out which country a track or album can be streamed from.</p>
 
-    <hr>
-
-    <!-- Authentication prompt -->
-    <section id="signIn">
-      <h2>It looks like you aren't logged in.</h2>
-      <p>
-        <strong>You'll need to let Kira access Spotify by granting it access through your account.</strong>.
+        <hr>
+      </header>
+      
+      <section id="signIn">
+          <h2 class="bg-error smooth-corner has-padding text-white">It looks like you aren't logged in.</h1>
+          <p>
+            <strong>You'll need to let Kira access Spotify by granting it access through your account.</strong>
+            <br>
+            Don't worry, Kira doesn't access any of your information and only uses the access to query Spotify's database.
+          </p>
+        <a href="https://accounts.spotify.com/authorize?client_id=cda2c3646652460fa7160485639bd2dd&redirect_uri=https://kira.vercel.app&response_type=token&show_dialog=true" class="button primary">Sign In to Spotify</a>
+      </section>
+  
+      <!-- Spotify reference input form -->
+      <form onsubmit="return false" id="form" style="display: none;">
         <br>
-        Don't worry, Kira doesn't access any of your information and only uses the access to query Spotify's database.
-        <br> 
+        <label for="indentifier">What is the Spotify <abbr title="spotify:track:xxxx">track URI</abbr>, <abbr title="spotify:album:xxxx">album URI</abbr>, <abbr title="open.spotify.com/track/xxxx">track URL</abbr>, or <abbr title="open.spotify.com/album/xxxx">album URL</abbr>?</label>
+        <textarea type="text" placeholder="Spotify URI or URL" id="identifier" style="height: 1.1em; overflow: hidden;" required></textarea>
+        <input type="submit" onclick="query()" value="Search">
         <br>
-        <a href="https://accounts.spotify.com/authorize?client_id=cda2c3646652460fa7160485639bd2dd&redirect_uri=https://kira.vercel.app&response_type=token&show_dialog=true"><button>Sign In to Spotify</button></a>
-      </p>
-    </section>
-
-    <!-- Spotify reference input form -->
-    <form onsubmit="return false" id="form" style="display: none;">
-      <br>
-      <label for="indentifier">What is the Spotify <abbr title="spotify:track:xxxx">track URI</abbr>, <abbr title="spotify:album:xxxx">album URI</abbr>, <abbr title="open.spotify.com/track/xxxx">track URL</abbr>, or <abbr title="open.spotify.com/album/xxxx">album URL</abbr>?</label>
-      <textarea type="text" placeholder="Spotify URI or URL" id="identifier" style="height: 1.1em; overflow: hidden;" required></textarea>
-      <input type="submit" onclick="query()" value="Search">
-      <br>
-    </form>
-
-    <!-- Results section -->
-    <section id="results" style="display: none;">
-      <label for="markets" id="markets-label"></label>
-      <ul id="markets">
-      </ul>
-    </section>
-
-    <!-- JavaScript link (defer until after the UI is loaded) -->
-    <script src="index.js" defer></script>
+      </form>
+  
+      <!-- Results section -->
+      <section id="results" style="display: none;">
+        <label for="markets" id="markets-label"></label>
+        <ul id="markets">
+        </ul>
+      </section>
+  
+      <!-- JavaScript link (defer until after the UI is loaded) -->
+      <script src="index.js" defer></script>
+    </main>
   </body>
 </html>
