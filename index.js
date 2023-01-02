@@ -52,6 +52,12 @@ function encodeText(text) {
   return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
+function createEmbed(trackOrAlbumId) {
+  document.getElementById("embed").innerHTML = 
+  `<iframe style=\"border-radius: 12px\" width=\"100%\" height=\"152\" frameborder=\"0\" allowfullscreen allow=\"autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture\" loading=\"lazy\" src=\"https://open.spotify.com/embed/${trackOrAlbumId[1]}/${trackOrAlbumId[0]}?utm_source=oembed\"></iframe>`;
+  if (document.getElementById("embed").classList.contains("is-hidden")) document.getElementById("embed").classList.remove("is-hidden");
+};
+
 async function query() {
   // Sets the user access token as returned by Spotify Web API
   const urlHash = window.location.hash.substring(1).split("&").reduce(function (initial, item) {
@@ -115,10 +121,11 @@ async function query() {
     document.getElementById("errorTitle").innerText = "Kira isn't able to process this track right now.";
     document.getElementById("errorBody").innerText = "The way that Spotify stores this track metadata means that Kira isn't able to get the countries where this track is available just yet. I'm working on finding a way, but for now, you may need to use another tool instead";
     document.getElementById("errorSection").classList.remove("is-hidden");
-    if (document.getElementById("results").classList.contains("is-hidden") !== true) {
+    if (document.getElementById("results").classList.length !== 0) {
       document.getElementById("results").classList.add("is-hidden");
-    }
+    };
   } else {
+    createEmbed(trackOrAlbumId);
     document.getElementById("results").classList.remove("is-hidden");
     document.getElementById("markets-label").innerHTML = 
       `<strong>${name}</strong> by <strong>${artists}${artistsEtc ? " etc." : ""}</strong> can be streamed in ${markets.length} countries:`;

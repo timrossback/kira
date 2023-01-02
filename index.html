@@ -86,21 +86,24 @@
           <div class="col-10">
             <input type="text" placeholder="Spotify URI or URL" id="itemCode" required></input>
           </div>
-          <div class="col">
-            <input type="submit" onclick="query()" value="Search" class="button primary">
-          </div>
+          <input type="submit" onclick="query()" value="Search" class="button primary col">
         </div>
       </form>
   
       <!-- Results section -->
       <section id="results" class="is-hidden">
+        <div class="row">
+          <div id="embed" class="is-hidden col">
+          
+          </div>
+        </div>
         <label for="markets" id="markets-label"></label>
         <ul id="markets">
         </ul>
       </section>
   
       <!-- JavaScript link (defer until after the UI is loaded) -->
-      <script src="index.js" defer></script>
+      <script src="index.js" async></script>
     </main>
   </body>
 </html>
