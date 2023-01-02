@@ -67,18 +67,23 @@
           </p>
         <a href="https://accounts.spotify.com/authorize?client_id=cda2c3646652460fa7160485639bd2dd&redirect_uri=https://kira.vercel.app&response_type=token&show_dialog=true" class="button primary">Sign In to Spotify</a>
       </section>
+
+      <section class="is-hidden" id="errorSection">
+        <h3 class="bg-error smooth-corner has-padding text-white" id="errorTitle"></h3>
+        <p id="errorBody"></p>
+      </section>
   
       <!-- Spotify reference input form -->
-      <form onsubmit="return false" id="form" style="display: none;">
+      <form onsubmit="return false" id="form" class="is-hidden">
         <br>
-        <label for="indentifier">What is the Spotify <abbr title="spotify:track:xxxx">track URI</abbr>, <abbr title="spotify:album:xxxx">album URI</abbr>, <abbr title="open.spotify.com/track/xxxx">track URL</abbr>, or <abbr title="open.spotify.com/album/xxxx">album URL</abbr>?</label>
-        <textarea type="text" placeholder="Spotify URI or URL" id="identifier" style="height: 1.1em; overflow: hidden;" required></textarea>
+        <label for="itemCode">What is the Spotify <abbr title="spotify:track:xxxx">track URI</abbr>, <abbr title="spotify:album:xxxx">album URI</abbr>, <abbr title="open.spotify.com/track/xxxx">track URL</abbr>, or <abbr title="open.spotify.com/album/xxxx">album URL</abbr>?</label>
+        <textarea type="text" placeholder="Spotify URI or URL" id="itemCode" style="height: 1.1em; overflow: hidden;" required></textarea>
         <input type="submit" onclick="query()" value="Search">
         <br>
       </form>
   
       <!-- Results section -->
-      <section id="results" style="display: none;">
+      <section id="results" class="is-hidden">
         <label for="markets" id="markets-label"></label>
         <ul id="markets">
         </ul>
