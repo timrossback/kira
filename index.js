@@ -1,23 +1,20 @@
 // If the user isn't logged in on first load, they're prompted to.
 (function () {
   if (window.location.href.includes("#access_token") != true) {
-    console.log("No #access_token found; showing prompt to login via Spotify Auth API.");
-    document.getElementById("signIn").style.display = "";
+    console.log("Auth: No #access_token found in URL string. Displaying log in module.");
   } else {
-    console.log("#access_token found")
-    document.getElementById("signIn").innerHTML =
-      `<h2 id="error-title"></h2> <p id="error-body"></p>`;
-    document.getElementById("signIn").style.display = "none";
-    document.getElementById("form").style.display = "";
-    document.getElementById("results").style.display = "";
+    console.log("Auth: #access_token found in URL string. Hiding log in module")
+    document.getElementById("signIn").classList.add("is-hidden")
+    document.getElementById("form").classList.remove("is-hidden");
+    document.getElementById("results").classList.remove("is-hidden");
   }
 })();
 
 // Derives the track/album ID from the URI
 function getTrackOrAlbumId() {
-  let input = document.getElementById("identifier").value.trim();
+  let input = document.getElementById("itemCode").value.trim();
   if (input.startsWith("open.spotify.com")) {
-    input = "https://" + input;
+    let input = "https://" + input;
   }
   let url;
   try {
@@ -55,6 +52,12 @@ function encodeText(text) {
   return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
+function createEmbed(trackOrAlbumId) {
+  document.getElementById("embed").innerHTML = 
+  `<iframe style=\"border-radius: 12px\" width=\"100%\" height=\"152\" frameborder=\"0\" allowfullscreen allow=\"autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture\" loading=\"lazy\" src=\"https://open.spotify.com/embed/${trackOrAlbumId[1]}/${trackOrAlbumId[0]}?utm_source=oembed\"></iframe>`;
+  if (document.getElementById("embed").classList.contains("is-hidden")) document.getElementById("embed").classList.remove("is-hidden");
+};
+
 async function query() {
   // Sets the user access token as returned by Spotify Web API
   const urlHash = window.location.hash.substring(1).split("&").reduce(function (initial, item) {
@@ -69,13 +72,17 @@ async function query() {
 
   const trackOrAlbumId = getTrackOrAlbumId();
 
+  /* Flags that there is nothing in the input box */
   if (trackOrAlbumId[0] === null) {
-    console.error(trackOrAlbumId[1]);
-    document.getElementById("error-title").innerText = "Kira can't recognize your input.";
-    document.getElementById("error-body").innerText = trackOrAlbumId[1];
-    document.getElementById("signIn").style.display = "";
-    document.getElementById("markets").style.display = "none";
+    console.error("SEARCH: No input detected, returning.");
+    if (document.getElementById("itemCode").classList.contains("bd-error") !== true) {
+      document.getElementById("itemCode").classList.add("bd-error");
+    }
     return;
+  }
+
+  if (document.getElementById("itemCode").classList.contains("bd-error") == true) {
+    document.getElementById("itemCode").classList.remove("bd-error");
   }
 
   let error = false;
@@ -86,19 +93,17 @@ async function query() {
     }
   }).catch((err) => {
     console.error("There was an error: a connection could not be made to the Spotify Web API. It may be unavailable right now.");
-    document.getElementById("error-title").innerText = "Kira can't reach Spotify right now.";
-    document.getElementById("error-body").innerText = "Something's happened and Kira isn't able to reach Spotify's servers right now. Try again a little bit later?";
-    document.getElementById("signIn").style.display = "";
-    document.getElementById("markets").style.display = "none";
+    document.getElementById("errorTitle").innerText = "Kira can't reach Spotify right now.";
+    document.getElementById("errorBody").innerText = "Something's happened and Kira isn't able to reach Spotify's servers right now. Try again a little bit later, or reload the page?";
+    document.getElementById("errorSection").classList.remove("is-hidden");
     error = true;
   }).then(x => {
     if (x === undefined) return;
     if (x.status >= 400) {
       console.error("There was an error: connection made, but returned an error status code: " + this.status + ".");
-      document.getElementById("error-title").innerText = "Kira is having a few issues right now.";
-      document.getElementById("error-body").innerText = "Something has happened when talking to Spotify and an error was thrown (" + this.status + "). Try again a little bit later?";
-      document.getElementById("signIn").style.display = "";
-      document.getElementById("markets").style.display = "none";
+      document.getElementById("errorTitle").innerText = "Kira is having a few issues right now.";
+      document.getElementById("errorBody").innerText = "Something has happened when talking to Spotify and an error was thrown (" + this.status + "). Try again a little bit later?";
+      document.getElementById("errorSection").classList.remove("is-hidden");
       error = true;
       return null;
     }
@@ -113,15 +118,17 @@ async function query() {
   const markets = resp.available_markets;
   if (markets.length == 0) {
     console.error("There was an error: track is relinked.");
-    document.getElementById("error-title").innerText = "Kira isn't able to process this track right now.";
-    document.getElementById("error-body").innerText = "The way that Spotify stores this track metadata means that Kira isn't able to get the countries where this track is available just yet. I'm working on finding a way, but for now, you may need to use another tool instead";
-    document.getElementById("signIn").style.display = "";
-    document.getElementById("markets").style.display = "none";
+    document.getElementById("errorTitle").innerText = "Kira isn't able to process this track right now.";
+    document.getElementById("errorBody").innerText = "The way that Spotify stores this track metadata means that Kira isn't able to get the countries where this track is available just yet. I'm working on finding a way, but for now, you may need to use another tool instead";
+    document.getElementById("errorSection").classList.remove("is-hidden");
+    if (document.getElementById("results").classList.length !== 0) {
+      document.getElementById("results").classList.add("is-hidden");
+    };
   } else {
+    createEmbed(trackOrAlbumId);
+    document.getElementById("results").classList.remove("is-hidden");
     document.getElementById("markets-label").innerHTML = 
-      `<strong>${name}</strong> by <strong>${artists}${artistsEtc ? " etc." : ""}</strong> can be streamed in ${markets.length} countries:`;
-    document.getElementById("markets").style.display = "";
-    document.getElementById("signIn").style.display = "none";
+      `The ${trackOrAlbumId[1]} <strong>${name}</strong> by <strong>${artists}${artistsEtc ? " etc." : ""}</strong> can be streamed in ${markets.length} countries:`;
     document.getElementById("markets").innerHTML = "";
     markets.map(x => countries[x]).sort().map(country => {
       const item = document.createElement("li");
