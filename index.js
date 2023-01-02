@@ -6,14 +6,14 @@ function checkAccessCookieStatus() {
     console.log("AUTH: Cookie does not validly store auth token. Prompting log in module.");
   } else {
     console.log("AUTH: Access token found in cookies. Hiding log in module.");
-    document.getElementById("signIn").classList.toggle("is-hidden");
-    document.getElementById("form").classList.toggle("is-hidden");
-    document.getElementById("results").classList.toggle("is-hidden");
+    document.getElementById("signIn").classList.add("is-hidden");
+    document.getElementById("form").classList.remove("is-hidden");
+    document.getElementById("results").classList.remove("is-hidden");
   };
 }
 
 // Calls checkAccessCookieStatus() when the page is first loaded to trigger cookie checks.
-window.onLoad = function() {
+window.onload = function() {
   checkAccessCookieStatus();
 }
 
