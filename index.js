@@ -66,12 +66,17 @@ async function query() {
 
   const trackOrAlbumId = getTrackOrAlbumId();
 
+  /* Flags that there is nothing in the input box */
   if (trackOrAlbumId[0] === null) {
-    console.error(trackOrAlbumId[1]);
-    document.getElementById("errorTitle").innerText = "Kira is having trouble finding a Spotify item with your input.";
-    document.getElementById("errorBody").innerText = trackOrAlbumId[1];
-    document.getElementById("errorSection").classList.remove("is-hidden");
+    console.error("SEARCH: No input detected, returning.");
+    if (document.getElementById("itemCode").classList.contains("bd-error") !== true) {
+      document.getElementById("itemCode").classList.add("bd-error");
+    }
     return;
+  }
+
+  if (document.getElementById("itemCode").classList.contains("bd-error") == true) {
+    document.getElementById("itemCode").classList.remove("bd-error");
   }
 
   let error = false;
