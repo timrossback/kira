@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <title>Authentication calback</title>
+
+    <!-- Maintenance tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Chota CSS framework - https://jenil.github.io/chota/ -->
+    <link rel="stylesheet" href="https://unpkg.com/chota@latest">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Enabling dark mode if requested -->
+    <script>
+      if (window.matchMedia &&
+          window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+      }
+    </script>
+  </head>
+
+  <body>
+    <main class="container">
+      <header>
+        <nav class="nav hide-xs hide-sm hide-pr">
+          <div class="nav-left">
+            <strong><a href="https://kira.vercel.app" class="text-white brand bg-primary">Kira</a></strong>
+          </div>
+          <div class="nav-right">
+            <a href="https://github.com/timrossback/Kira" target="_blank">View on GitHub</a>
+          </div>
+        </nav>
+        
+        <nav class="nav hide-md hide-lg">
+          <div class="bg-primary">
+            <strong><a href="https://kira.vercel.app" class="text-white brand">Kira</a></strong>
+          </div>
+        </nav>
+      </header>
+
+      <section>
+        <h1 class="is-marginless">Authenticating...</h1>
+        <p>Kira is logging into Spotify. You will be redirected shortly.</p>
+      </section>
+
+      <section class="is-hidden" id="auth-error">
+        <h3 class="bg-error smooth-corner has-padding text-white" id="errorTitle">An error occured during log in.</h3>
+        <p id="errorBody">There was an issue authenticating or authorising Kira, and we haven't been able to link to Spotify. Please <a href="/" target="_self">try again</a>.</p>
+      </section>
+  
+      <!-- JavaScript link (defer until after the UI is loaded) -->
+      <script src="callback.js" async></script>
+    </main>
+  </body>
+</html>

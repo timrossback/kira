@@ -1,14 +1,22 @@
-// If the user isn't logged in on first load, they're prompted to.
-(function () {
-  if (window.location.href.includes("#access_token") != true) {
-    console.log("Auth: No #access_token found in URL string. Displaying log in module.");
+// Checks if the user has an auth token already stored in cookies. If not or is invalid, prompts to login. Else, begins form.
+window.onLoad = function() {
+  if (document.cookie === "") {
+    console.log("AUTH: No access token found in cookies. Prompting log in module.");
+  } else if (document.cookie.indexOf("accessToken") === -1) { 
+    console.log("AUTH: Cookie does not validly store auth token. Prompting log in module.");
   } else {
-    console.log("Auth: #access_token found in URL string. Hiding log in module")
-    document.getElementById("signIn").classList.add("is-hidden")
+    console.log("AUTH: Access token found in cookies. Hiding log in module.");
+    document.getElementById("signIn").classList.add("is-hidden");
     document.getElementById("form").classList.remove("is-hidden");
     document.getElementById("results").classList.remove("is-hidden");
-  }
-})();
+  };
+}
+
+function getAccessTokenFromCookies() {
+  let token = document.cookie.split(";")[0].slice(12);
+  return token;
+}
+
 
 // Derives the track/album ID from the URI
 function getTrackOrAlbumId() {
@@ -59,17 +67,9 @@ function createEmbed(trackOrAlbumId) {
 };
 
 async function query() {
-  // Sets the user access token as returned by Spotify Web API
-  const urlHash = window.location.hash.substring(1).split("&").reduce(function (initial, item) {
-    if (item) {
-      var parts = item.split("=");
-      initial[parts[0]] = decodeURIComponent(parts[1]);
-    }
-    return initial;
-  }, {});
-
-  const accessToken = urlHash.access_token;
-
+  // Fetch Spotify Web API access token
+  const accessToken = getAccessTokenFromCookies();
+  // Fetch universal item reference code
   const trackOrAlbumId = getTrackOrAlbumId();
 
   /* Flags that there is nothing in the input box */
