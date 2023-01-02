@@ -1,24 +1,30 @@
 // Checks if the user has an auth token already stored in cookies. If not or is invalid, prompts to login. Else, begins form.
-window.onLoad = function() {
+function checkAccessCookieStatus() {
   if (document.cookie === "") {
     console.log("AUTH: No access token found in cookies. Prompting log in module.");
   } else if (document.cookie.indexOf("accessToken") === -1) { 
     console.log("AUTH: Cookie does not validly store auth token. Prompting log in module.");
   } else {
     console.log("AUTH: Access token found in cookies. Hiding log in module.");
-    document.getElementById("signIn").classList.add("is-hidden");
-    document.getElementById("form").classList.remove("is-hidden");
-    document.getElementById("results").classList.remove("is-hidden");
+    document.getElementById("signIn").classList.toggle("is-hidden");
+    document.getElementById("form").classList.toggle("is-hidden");
+    document.getElementById("results").classList.toggle("is-hidden");
   };
 }
 
+// Calls checkAccessCookieStatus() when the page is first loaded to trigger cookie checks.
+window.onLoad = function() {
+  checkAccessCookieStatus();
+}
+
+// Returns the access token from cookie storage.
 function getAccessTokenFromCookies() {
   let token = document.cookie.split(";")[0].slice(12);
   return token;
 }
 
 
-// Derives the track/album ID from the URI
+// Derives the track/album ID from the URI.
 function getTrackOrAlbumId() {
   let input = document.getElementById("itemCode").value.trim();
   if (input.startsWith("open.spotify.com")) {
