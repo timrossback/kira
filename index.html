@@ -82,7 +82,7 @@
       <!-- Spotify reference input form -->
       <form onsubmit="return false" id="form" class="is-hidden">
         <label for="itemCode">What is the Spotify <abbr title="spotify:track:xxxx">track URI</abbr>, <abbr title="spotify:album:xxxx">album URI</abbr>, <abbr title="open.spotify.com/track/xxxx">track URL</abbr>, or <abbr title="open.spotify.com/album/xxxx">album URL</abbr>?</label>
-        <div class="row">
+        <div class="row is-vertical-align">
           <div class="col-10">
             <input type="text" placeholder="Spotify URI or URL" id="itemCode" required></input>
           </div>
@@ -90,7 +90,6 @@
             <input type="submit" onclick="query()" value="Search" class="button primary">
           </div>
         </div>
-        <!-- <button type="submit" class="button primary" onclick="query()" value="Search"> -->
       </form>
   
       <!-- Results section -->
