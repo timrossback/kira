@@ -128,7 +128,7 @@ async function query() {
     createEmbed(trackOrAlbumId);
     document.getElementById("results").classList.remove("is-hidden");
     document.getElementById("markets-label").innerHTML = 
-      `<strong>${name}</strong> by <strong>${artists}${artistsEtc ? " etc." : ""}</strong> can be streamed in ${markets.length} countries:`;
+      `The ${trackOrAlbumId[1]} <strong>${name}</strong> by <strong>${artists}${artistsEtc ? " etc." : ""}</strong> can be streamed in ${markets.length} countries:`;
     document.getElementById("markets").innerHTML = "";
     markets.map(x => countries[x]).sort().map(country => {
       const item = document.createElement("li");
