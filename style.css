@@ -1,11 +1,11 @@
 /* Kira colour pallete - https://coolors.co/12263a-06bcc1-c5d8d1-8a4f7d-6a245e */
-@import url('https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap');
 
 :root {
-  --color-primary: #12263A;
-  --color-error: #06BCC1;
+  --color-primary: #6A245E;
+  --color-error: #B57DA9;
   --font-size: 1.7rem;
-  --font-family-sans: "Golos Text", sans-serif;
+  --font-family-sans: "Figtree", sans-serif;
 }
 
 a {
