@@ -134,7 +134,11 @@ async function query() {
   } else {
     createEmbed(trackOrAlbumId);
     document.getElementById("results").classList.remove("is-hidden");
-    document.getElementById("errorSection").classList.remove("is-hidden");
+    if (documents.getElementById("errorSection").classList.includes("is-hidden")) {
+      return;
+    } else {
+      document.getElementById("errorSection").classList.add("is-hidden");
+    }
     document.getElementById("markets-label").innerHTML = 
       `The ${trackOrAlbumId[1]} <strong>${name}</strong> by <strong>${artists}${artistsEtc ? " etc." : ""}</strong> can be streamed in ${markets.length} countries:`;
     document.getElementById("markets").innerHTML = "";
