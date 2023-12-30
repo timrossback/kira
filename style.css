@@ -156,5 +156,9 @@ input.form-submit {
     padding: 0.7vh 0.5vw;
     background-color: rgb(23, 36, 117);
     color: white;
+}
 
+.market-list-item {
+    list-style-position: inside;
+    padding-left: 2vw;
 }

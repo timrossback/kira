@@ -134,12 +134,14 @@ async function query() {
   } else {
     createEmbed(trackOrAlbumId);
     document.getElementById("results").classList.remove("is-hidden");
+    document.getElementById("errorSection").classList.remove("is-hidden");
     document.getElementById("markets-label").innerHTML = 
       `The ${trackOrAlbumId[1]} <strong>${name}</strong> by <strong>${artists}${artistsEtc ? " etc." : ""}</strong> can be streamed in ${markets.length} countries:`;
     document.getElementById("markets").innerHTML = "";
     markets.map(x => countries[x]).sort().map(country => {
       const item = document.createElement("li");
       item.innerHTML = country;
+      item.classList.add("market-list-item");
       document.getElementById("markets").appendChild(item);
     })
   }   
