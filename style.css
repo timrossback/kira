@@ -114,11 +114,6 @@ main {
     }
   }
 
-main {
-    margin-top: 5vh;
-    margin-bottom: 5vh;
-}
-
 section#signIn {
     padding: 3vh 3vw;
     background-color: rgba(23 36 117 / 25%);
