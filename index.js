@@ -134,7 +134,7 @@ async function query() {
   } else {
     createEmbed(trackOrAlbumId);
     document.getElementById("results").classList.remove("is-hidden");
-    if (documents.getElementById("errorSection").classList.includes("is-hidden")) {
+    if (document.getElementById("errorSection").classList.includes("is-hidden")) {
       return;
     } else {
       document.getElementById("errorSection").classList.add("is-hidden");
