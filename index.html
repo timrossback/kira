@@ -1,84 +1,67 @@
 <!DOCTYPE html>
 
 <html lang="en">
-  <head>
-    <title>Kira</title>
+    <head>
+        <title>Kira - check Spotify regional availability</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Regional availability checker for Spotify content">
+        <meta name="keywords" content="Spotify,Kira,spotify countries,spotify kira,spotify regions,spotify content availability,spotify availability">
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <link rel="stylesheet" href="style.css">
+    </head>
 
-    <!-- Maintenance tags -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <body>
+        <header>
+            <h1 class="title-block">
+                <a href="index" class="title-link">Kira</a>
+            </h1>
+            <p class="subtitle">A simple way to check the regional availability of Spotify content</p>
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a href="https://github.com/timrossback/Kira" class="nav-link">See Kira on GitHub</a>
+                </li>
+                <li class="nav-item">
+                    <a href="acknowledgement.html" class="nav-link">Acknowledgement of Country</a>
+                </li>
+            </ul>
+        </header>
 
-    <!-- Chota CSS framework - https://jenil.github.io/chota/ -->
-    <link rel="stylesheet" href="https://unpkg.com/chota@latest">
-    <link rel="stylesheet" href="style.css">
-  </head>
+        <main>
+            <section id="signIn">
+                <h2 class="notice">Let's get you signed in</h2>
+                <p>
+                    You'll need to authorise Kira to access Spotify's system by signing in with your account. Don't worry, Kira doesn't access any of your personal information.
+                </p>
+                <button type="button" class="sign-in-button">
+                    <a href="https://accounts.spotify.com/authorize?client_id=cda2c3646652460fa7160485639bd2dd&redirect_uri=https://kira.vercel.app/callback.html&response_type=token" class="sign-in-link">Sign in with Spotify</a>
+                </button>
+            </section>
 
-  <body>
-    <main class="container">
-      <header>
-        <nav class="nav hide-xs hide-sm hide-pr">
-          <div class="nav-left">
-            <strong><a href="https://kira.vercel.app" class="text-white brand bg-primary">Kira</a></strong>
-          </div>
-          <div class="nav-right">
-            <a href="/acknowledgement.html" target="_self">Acknowledgement of Country</a>
-            <a href="https://github.com/timrossback/Kira" target="_blank">View on GitHub</a>
-          </div>
-        </nav>
+            <section id="errorSection" class="is-hidden">
+                <h2 id="errorTitle"></h2>
+                <p id="errorBody"></p>
+                <p id="errorCode" class="error-code"></p>
+            </section>
+
+            <!-- Spotify reference input form -->
+            <form onsubmit="return false" id="form" class="is-hidden">
+                <label for="itemCode">What is the <abbr title="https://open.spotify.com/...">URL</abbr> or <abbr title="spotify:...:...">URI</abbr> of the album or track you're looking for?</label>
+                <input type="text" placeholder="Spotify URL or URI" id="itemCode" class="form-field" required></input>
+                <input type="submit" onclick="query()" value="Search" class="form-submit">
+            </form>
+  
+            <!-- Results section -->
+            <section id="results" class="is-hidden">
+                <div id="embed" class="is-hidden">
+                
+                </div>
+                <label for="markets" id="markets-label"></label>
+                <ul id="markets">
+                </ul>
+            </section>
         
-        <nav class="nav hide-md hide-lg">
-          <div class="bg-primary">
-            <strong><a href="https://kira.vercel.app" class="text-white brand">Kira</a></strong>
-          </div>
-        </nav>
-      
-        <h1 class="is-marginless">Welcome to <strong>Kira</strong></h1>
-        <p>Kira talks to Spotify to find out which country a track or album can be streamed from.</p>
-
-        <hr>
-      </header>
-      
-      <section id="signIn">
-          <h3 class="bg-error smooth-corner has-padding text-white">It looks like you aren't logged in.</h3>
-          <p>
-            <strong>You'll need to let Kira access Spotify by granting it access through your account.</strong>
-            <br>
-            Don't worry, Kira doesn't access any of your information and only uses the access to query Spotify's database.
-          </p>
-        <a href="https://accounts.spotify.com/authorize?client_id=cda2c3646652460fa7160485639bd2dd&redirect_uri=https://kira.vercel.app/callback.html&response_type=token" class="button primary">Sign In to Spotify</a>
-      </section>
-
-      <section class="is-hidden" id="errorSection">
-        <h3 class="bg-error smooth-corner has-padding text-white" id="errorTitle"></h3>
-        <p id="errorBody"></p>
-      </section>
-  
-      <!-- Spotify reference input form -->
-      <form onsubmit="return false" id="form" class="is-hidden">
-        <label for="itemCode">What is the Spotify <abbr title="spotify:track:xxxx">track URI</abbr>, <abbr title="spotify:album:xxxx">album URI</abbr>, <abbr title="open.spotify.com/track/xxxx">track URL</abbr>, or <abbr title="open.spotify.com/album/xxxx">album URL</abbr>?</label>
-        <div class="row is-vertical-align">
-          <div class="col-10">
-            <input type="text" placeholder="Spotify URI or URL" id="itemCode" required></input>
-          </div>
-          <input type="submit" onclick="query()" value="Search" class="button primary col">
-        </div>
-      </form>
-  
-      <!-- Results section -->
-      <section id="results" class="is-hidden">
-        <div class="row">
-          <div id="embed" class="is-hidden col">
-          
-          </div>
-        </div>
-        <label for="markets" id="markets-label"></label>
-        <ul id="markets">
-        </ul>
-      </section>
-  
-      <!-- JavaScript link (defer until after the UI is loaded) -->
-      <script src="index.js" defer></script>
-    </main>
-  </body>
+            <!-- JavaScript link (defer until after the UI is loaded) -->
+            <script src="index.js" defer></script>
+        </main>
+    </body>
 </html>
