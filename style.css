@@ -41,6 +41,31 @@ a.title-link:active {
     font-weight: 800;
 }
 
+a.nav-link:link, a.nav-link:visited {
+    color: rgba(89, 0, 255, 80%);
+    font-weight: 500;
+    text-decoration: none;
+}
+
+a.nav-link:hover {
+    color: rgb(89, 0, 255);
+    font-weight: 800;
+    text-decoration: none;
+}
+
+a.nav-link:active {
+    color: rgb(121, 60, 178);
+    font-weight: 800;
+    text-decoration: none;
+}
+
+a.nav-link::after {
+    content: "\203A";
+    font-size: 1.3rem;
+    margin-left: 0.25rem;
+    vertical-align: 5%;
+}
+
 a.link:link, a.link:visited {
     color: rgba(89, 0, 255, 80%);
     font-weight: 500;
