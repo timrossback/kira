@@ -134,9 +134,7 @@ async function query() {
   } else {
     createEmbed(trackOrAlbumId);
     document.getElementById("results").classList.remove("is-hidden");
-    if (document.getElementById("errorSection").classList.includes("is-hidden")) {
-      return;
-    } else {
+    if (document.getElementById("errorSection").classList.contains("is-hidden") !== true) {
       document.getElementById("errorSection").classList.add("is-hidden");
     }
     document.getElementById("markets-label").innerHTML = 
