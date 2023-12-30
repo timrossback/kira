@@ -81,14 +81,14 @@ async function query() {
   /* Flags that there is nothing in the input box */
   if (trackOrAlbumId[0] === null) {
     console.error("SEARCH: No input detected, returning.");
-    if (document.getElementById("itemCode").classList.contains("bd-error") !== true) {
-      document.getElementById("itemCode").classList.add("bd-error");
+    if (document.getElementById("itemCode").classList.contains("input-error") !== true) {
+      document.getElementById("itemCode").classList.add("input-error");
     }
     return;
   }
 
-  if (document.getElementById("itemCode").classList.contains("bd-error") == true) {
-    document.getElementById("itemCode").classList.remove("bd-error");
+  if (document.getElementById("itemCode").classList.contains("input-error") == true) {
+    document.getElementById("itemCode").classList.remove("input-error");
   }
 
   let error = false;
@@ -99,7 +99,7 @@ async function query() {
     }
   }).catch((err) => {
     console.error("There was an error: a connection could not be made to the Spotify Web API. It may be unavailable right now.");
-    document.getElementById("errorTitle").innerText = "Kira can't reach Spotify right now.";
+    document.getElementById("errorTitle").innerText = "We're having troubles reaching Spotify right now";
     document.getElementById("errorBody").innerText = "Something's happened and Kira isn't able to reach Spotify's servers right now. Try again a little bit later, or reload the page?";
     document.getElementById("errorSection").classList.remove("is-hidden");
     error = true;
@@ -107,8 +107,9 @@ async function query() {
     if (x === undefined) return;
     if (x.status >= 400) {
       console.error("There was an error: connection made, but returned an error status code: " + this.status + ".");
-      document.getElementById("errorTitle").innerText = "Kira is having a few issues right now.";
-      document.getElementById("errorBody").innerText = "Something has happened when talking to Spotify and an error was thrown (" + this.status + "). Try again a little bit later?";
+      document.getElementById("errorTitle").innerText = "We're sorry about that";
+      document.getElementById("errorBody").innerText = "Something's gone wrong when we tried talking to Spotify. You might need to try again later.";
+      document.getElementById("errorCode").innerText = "Error code: " + this.status;
       document.getElementById("errorSection").classList.remove("is-hidden");
       error = true;
       return null;
@@ -124,7 +125,7 @@ async function query() {
   const markets = resp.available_markets;
   if (markets.length == 0) {
     console.error("There was an error: track is relinked.");
-    document.getElementById("errorTitle").innerText = "Kira isn't able to process this track right now.";
+    document.getElementById("errorTitle").innerText = "We aren't able to get the results for this track just yet";
     document.getElementById("errorBody").innerText = "The way that Spotify stores this track metadata means that Kira isn't able to get the countries where this track is available just yet. I'm working on finding a way, but for now, you may need to use another tool instead";
     document.getElementById("errorSection").classList.remove("is-hidden");
     if (document.getElementById("results").classList.length !== 0) {

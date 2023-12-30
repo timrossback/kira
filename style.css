@@ -1,25 +1,160 @@
-/* Kira colour pallete - https://coolors.co/12263a-06bcc1-c5d8d1-8a4f7d-6a245e */
-@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500;600;800&display=swap');
 
-:root {
-  --color-primary: #485696;
-  --color-error: #84B082;
-  --font-size: 1.7rem;
-  --font-family-sans: "Figtree", sans-serif;
+* {
+    margin: 0;
+    padding: 0;
 }
 
-a {
-  text-decoration: underline;
+body {
+    font-family: "Fira Sans", sans-serif;
+    font-weight: 400;
+    font-size: 1.1rem;
 }
 
-.smooth-corner {
-  border-radius: 0.5rem;
+h1,h2,h3,h4,h5,h6 {
+    font-weight: 600;
 }
 
-.has-padding {
-  padding: 1rem;
+*:not(header > *, .nav-list, .nav-list > *) {
+    margin-bottom: 1vh;
 }
 
-nav.nav {
-  margin-top: 1rem;
+.title-block {
+    background-color: rgb(23, 36, 117);
+    color: white;
+    padding: 0.5rem 8vw;
+    display: block;
+    font-size: 4rem;
+}
+
+a.title-link:link, a.title-link:visited {
+    color: white;
+    text-decoration: none;
+}
+
+a.title-link:hover {
+    color: rgba(207 169 255 / 50%);
+}
+
+a.title-link:active {
+    color: rgb(207 169 255);
+    font-weight: 800;
+}
+
+a.link:link, a.link:visited {
+    color: rgba(89, 0, 255, 80%);
+    font-weight: 500;
+}
+
+a.link:hover {
+    color: rgb(89, 0, 255);
+    font-weight: 800;
+}
+
+a.link:active {
+    color: rgb(121, 60, 178);
+    font-weight: 800;
+}
+
+.subtitle {
+    background-color: rgba(23 36 117 / 70%);
+    color: white;
+    padding: 0.5rem 8vw;
+    display: block;
+    font-weight: 300;
+    font-size: 1.25rem;
+}
+
+main {
+    padding: 0.5rem 8vw;
+}
+
+.nav-list {
+    list-style: none;
+    padding: 0.5rem 8vw;
+    display: block;
+    background-color: rgba(23 36 117 / 25%);
+}
+
+.nav-item {
+    display: inline-block;
+    margin-right: 4vw;
+}
+
+/* Hide nav list when window width <= 900px */
+
+@media screen and (max-width: 900px) {
+    .nav-list {
+        display: none;
+    }
+  }
+
+main {
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+}
+
+section#signIn {
+    padding: 3vh 3vw;
+    background-color: rgba(23 36 117 / 25%);
+}
+
+button.sign-in-button {
+    border: none;
+    border-radius: 0.5vw;
+    padding: 0.6vh 0.6vw;
+    background-color: rgb(23, 36, 117);
+}
+
+a.sign-in-link {
+    font-weight: 300;
+    font-size: 1.2rem;
+    text-decoration: none;
+    color: white;
+}
+
+a.sign-in-link::after {
+    content: "\203A";
+    font-size: 1.3rem;
+    margin-left: 0.5rem;
+    vertical-align: 5%;
+}
+
+.is-hidden {
+    display: none;
+}
+
+section#errorSection {
+    padding: 3vh 3vw;
+    background-color: rgba(228, 39, 26, 0.25);
+}
+
+.error-code {
+    font-size: 0.9rem;
+    opacity: 0.6;
+}
+
+form > * {
+    display: block;
+}
+
+input.form-field {
+    background-color: white;
+    padding: 0.7vh 0.5vw;
+    width: 35vw;
+    border: 2px solid rgb(23, 36, 117);
+    border-radius: 4px;
+}
+
+input#itemCode.input-error {
+    border: 4px dashed rgb(228, 39, 26);
+}
+
+input.form-submit {
+    border: none;
+    border-radius: 0.5vw;
+    padding: 0.7vh 0.5vw;
+    background-color: rgb(23, 36, 117);
+    color: white;
+
 }
